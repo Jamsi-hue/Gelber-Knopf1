@@ -7,52 +7,58 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #fffbe0;
+      background: #fffde7;
       text-align: center;
       padding: 40px;
     }
     h1 {
-      margin-bottom: 40px;
+      color: #333;
     }
     button {
-      background-color: #ffd700;
-      border: none;
-      color: #000;
+      font-size: 1.8em;
       padding: 20px 40px;
-      font-size: 1.5em;
+      background-color: #ffeb3b;
+      border: none;
       border-radius: 12px;
       cursor: pointer;
-      box-shadow: 2px 2px 6px #aaa;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     }
-    button:active {
-      transform: scale(0.98);
+    button:disabled {
+      background-color: #ccc;
+      color: #888;
+      cursor: default;
     }
   </style>
 </head>
 <body>
 
-<h1>Bitte gelben Knopf drücken</h1>
-<button id="yellowBtn">Drücken</button>
+  <h1>Drücke den gelben Knopf</h1>
+  <button id="yellowButton">Gelber Knopf</button>
 
-<script>
-  function speak(text) {
-    if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'de-DE';
-      window.speechSynthesis.speak(utterance);
-    } else {
-      alert("Sprachausgabe nicht unterstützt.");
+  <script>
+    const button = document.getElementById('yellowButton');
+
+    function speak(text) {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'de-DE';
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert("Sprachausgabe wird von deinem Browser nicht unterstützt.");
+      }
     }
-  }
 
-  window.onload = () => {
-    speak("Bitte den gelben Knopf drücken.");
-  };
+    // Beim Laden der Seite
+    window.onload = () => {
+      speak('Bitte auf den gelben Knopf drücken.');
+    };
 
-  document.getElementById('yellowBtn').addEventListener('click', () => {
-    speak("Gut gemacht!");
-  });
-</script>
+    // Beim Klick: „Danke“ sagen und Knopf deaktivieren
+    button.addEventListener('click', () => {
+      speak('Danke.');
+      button.disabled = true;
+    });
+  </script>
 
 </body>
 </html>
